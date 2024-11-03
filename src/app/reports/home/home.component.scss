@@ -1,4 +1,4 @@
-.no-data-message {
+.no_data {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -9,14 +9,22 @@
 }
 
 .mat-mdc-header-row {
-  background-color: #d7cece !important;
-  height: 40px !important;
+  background-color: #d7cece;
+  height: 40px;
 }
 
-.mat-mdc-header-cell:first-child  {
-  border-top-left-radius: 25px !important;
+.mat-mdc-header-cell:first-child {
+  border-top-left-radius: 25px;
 }
 
 .mat-mdc-header-cell:last-child {
   border-top-right-radius: 25px;
+}
+
+.add_user {
+  position: absolute;
+  bottom: 15%;
+  right: 3%;
+  background-color: #4caf50;
+  color: white;
 }
