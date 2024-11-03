@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: var(--primary-background-color);
+    color: var(--primary-text-color);
+}
+
+mat-sidenav-container,
+mat-sidenav,
+mat-sidenav-content {
+    height: 100%;
+}
+
+// mat-sidenav {
+//     width: 250px;
+// }

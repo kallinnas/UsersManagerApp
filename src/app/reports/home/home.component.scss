@@ -1,0 +1,22 @@
+.no-data-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: x-large;
+  color: #ada7a7;
+}
+
+.mat-mdc-header-row {
+  background-color: #d7cece !important;
+  height: 40px !important;
+}
+
+.mat-mdc-header-cell:first-child  {
+  border-top-left-radius: 25px !important;
+}
+
+.mat-mdc-header-cell:last-child {
+  border-top-right-radius: 25px;
+}
