@@ -79,8 +79,8 @@
   }
 
   .add_user_btn {
-    bottom: 10%;
-    right: 5%;
+    bottom: 9%;
+    right: 4%;
     transform: scale(0.8);
   }
 }
@@ -90,31 +90,36 @@
   justify-content: center;
 }
 
-/* Targeting the paginator to stay in one line */
 ::ng-deep .mat-paginator {
   display: flex;
-  flex-wrap: nowrap; /* Prevents items from wrapping onto a new line */
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Adjust styles for mobile view */
 @media (max-width: 768px) {
   ::ng-deep .mat-paginator {
-    font-size: 0.875rem; /* Smaller font size for mobile */
+    font-size: 0.875rem;
     padding: 0 8px;
   }
 
-  /* Narrow down the spacing for items */
   ::ng-deep .mat-paginator .mat-paginator-range-label,
   ::ng-deep .mat-paginator .mat-select-trigger,
   ::ng-deep .mat-paginator .mat-icon-button {
-    margin: 0 4px; /* Adjust margins to fit more comfortably */
+    margin: 0 4px;
   }
 
-  /* Adjust the select box width */
   ::ng-deep .mat-paginator .mat-select {
-    min-width: auto; /* Removes fixed minimum width */
-    width: 70px; /* Custom width to fit on mobile */
+    min-width: auto;
+    width: 70px;
   }
+
+  ::ng-deep .mat-mdc-paginator-range-label {
+    margin: 0px !important;
+  }
+}
+
+::ng-deep .mat-mdc-paginator-container {
+  flex-wrap: nowrap !important;
+  justify-content: start !important;
 }
