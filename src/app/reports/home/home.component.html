@@ -92,7 +92,7 @@
             </th>
             <td mat-cell *matCellDef="let user">
                 <div fxLayout="row" fxLayoutAlign="center center">
-                    <mat-icon (click)="openEditDialog(user.userID)">edit</mat-icon>
+                    <mat-icon (click)="openEditDialog(user.id)">edit</mat-icon>
                 </div>
             </td>
         </ng-container>
@@ -103,7 +103,7 @@
             </th>
             <td mat-cell *matCellDef="let user">
                 <div fxLayout="row" fxLayoutAlign="center center">
-                    <mat-icon (click)="removeUser(user.userID)">delete_forever</mat-icon>
+                    <mat-icon (click)="removeUser(user.id)">delete_forever</mat-icon>
                 </div>
             </td>
         </ng-container>

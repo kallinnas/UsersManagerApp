@@ -78,7 +78,11 @@ export class HomeComponent {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.dataSource.data = [...this.dataSource.data, result];
+          const newUserId = this.dataSource.data.length > 0
+            ? Math.max(...this.dataSource.data.map(user => user.id)) + 1 : 1;
+
+          const newUser: User = { ...result, id: newUserId };
+          this.dataSource.data = [...this.dataSource.data, newUser];
           this.saveUsersToCookies();
         }
       });
