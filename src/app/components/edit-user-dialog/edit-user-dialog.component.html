@@ -3,24 +3,24 @@
 
   <form fxFlex fxLayout="column" [formGroup]="userForm">
     <div fxLayout="row" fxLayoutGap="16px">
-      <mat-form-field>
+      <mat-form-field class="short-form-field">
         <mat-label>First Name</mat-label>
         <input matInput formControlName="firstName">
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="short-form-field">
         <mat-label>Last Name</mat-label>
         <input matInput formControlName="lastName">
       </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutGap="16px">
-      <mat-form-field>
+      <mat-form-field class="short-form-field">
         <mat-label>Age</mat-label>
         <input matInput formControlName="age" type="number">
       </mat-form-field>
 
-      <mat-form-field dir="ltr">
+      <mat-form-field class="short-form-field" dir="ltr">
         <mat-label>Gender</mat-label>
         <mat-select formControlName="gender">
           <mat-option *ngFor="let gender of genderOptions" [value]="gender">
@@ -31,7 +31,7 @@
     </div>
 
     <div fxLayout="row" fxLayoutGap="16px">
-      <mat-form-field>
+      <mat-form-field class="short-form-field">
         <mat-label>Country</mat-label>
         <input type="text" matInput formControlName="country" [matAutocomplete]="autoCountry">
         <mat-autocomplete #autoCountry="matAutocomplete">
@@ -41,7 +41,7 @@
         </mat-autocomplete>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="short-form-field">
         <mat-label>City</mat-label>
         <input matInput formControlName="city">
       </mat-form-field>

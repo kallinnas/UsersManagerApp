@@ -72,7 +72,7 @@ export class HomeComponent {
     try {
       const dialogRef = this.dialog.open(AddUserDialogComponent, {
         autoFocus: false,
-        width: '420px',
+        width: '300px',
         data: { user: null }
       });
 
@@ -94,7 +94,7 @@ export class HomeComponent {
       const user = this.dataSource.data.find(u => u.id === userID);
       const dialogRef = this.dialog.open(EditUserDialogComponent, {
         autoFocus: false,
-        width: '420px',
+        width: '300px',
         data: { user }
       });
 
