@@ -22,7 +22,7 @@
   border-top-right-radius: 25px;
 }
 
-.add_user {
+.add_user_btn {
   position: absolute;
   bottom: 15%;
   right: 3%;
@@ -30,7 +30,14 @@
   color: white;
 }
 
+.footer {
+  position: fixed;
+  right: 70px;
+  bottom: 50px;
+}
+
 @media (max-width: 768px) {
+
   .mat-mdc-header-row,
   .mat-mdc-header-cell,
   .mat-cell {
@@ -55,14 +62,15 @@
     display: block;
   }
 
-  .add_user {
+  .add_user_btn {
     bottom: 10%;
     right: 5%;
     transform: scale(0.8);
   }
+  
 }
 
-// .small-icon {
-//   width: 24px;
-//   height: 24px;
-// }
+::ng-deep .mat-sort-header-container {
+  display:flex;
+  justify-content:center;
+}

@@ -1,7 +1,11 @@
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { Component, HostListener, ViewChild } from '@angular/core';
+import { MatSortModule } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
-import { Component, HostListener } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 
 import { EditUserDialogComponent } from '../../components/edit-user-dialog/edit-user-dialog.component';
 import { AddUserDialogComponent } from '../../components/add-user-dialog/add-user-dialog.component';
@@ -20,16 +24,10 @@ export class HomeComponent {
   private FILE_NAME: string = 'home.ts';
   isMobileView: boolean = window.innerWidth <= 768;
   dataSource: MatTableDataSource<User> = new MatTableDataSource();
-  displayedColumns: string[] = [
-    'firstName',
-    'lastName',
-    'gender',
-    'age',
-    'country',
-    'city',
-    'edit',
-    'remove'
-  ];
+  displayedColumns!: string[];
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private cookieService: CookieService,
@@ -37,14 +35,33 @@ export class HomeComponent {
   ) { }
 
   ngOnInit() {
+    this.setDisplayColumns();
     this.loadUsersFromCookies();
     this.isMobileView = window.innerWidth <= 768;
+  }
 
-    if (window.innerWidth <= 768) {
-      this.displayedColumns = ['firstName', 'lastName', 'gender', 'age', 'countryIcon', 'cityIcon', 'edit', 'remove'];
-    } else {
-      this.displayedColumns = ['firstName', 'lastName', 'gender', 'age', 'country', 'city', 'edit', 'remove'];
+  setDisplayColumns() {
+    try {
+      if (window.innerWidth <= 768) {
+        this.displayedColumns = ['firstName', 'lastName', 'age', 'countryIcon', 'cityIcon', 'edit', 'remove'];
+      } else {
+        this.displayedColumns = ['firstName', 'lastName', 'gender', 'age', 'country', 'city', 'edit', 'remove'];
+      }
     }
+
+    catch (err) {
+      console.log(err, ' in setDisplayColumns ' + this.FILE_NAME);
+    }
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   loadUsersFromCookies(): void {
@@ -78,9 +95,8 @@ export class HomeComponent {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          const newUserId = this.dataSource.data.length > 0
-            ? Math.max(...this.dataSource.data.map(user => user.id)) + 1 : 1;
-
+          const data = this.dataSource.data;
+          const newUserId = data.length > 0 ? data[data.length - 1].id + 1 : 1;
           const newUser: User = { ...result, id: newUserId };
           this.dataSource.data = [...this.dataSource.data, newUser];
           this.saveUsersToCookies();
