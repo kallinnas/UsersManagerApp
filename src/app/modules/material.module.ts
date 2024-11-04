@@ -17,13 +17,15 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
   exports: [MatTableModule, MatButtonModule, MatIconModule, MatSortModule, MatPaginatorModule,
     MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatSelectModule, MatOptionModule,
     MatDatepickerModule, MatNativeDateModule, MatCardModule, MatDialogModule, MatProgressSpinnerModule,
-    MatListModule, MatToolbarModule, MatSidenavModule, MatProgressSpinnerModule, MatSnackBarModule
+    MatListModule, MatToolbarModule, MatSidenavModule, MatProgressSpinnerModule, MatSnackBarModule,
+    MatTooltipModule,
   ]
 })
 export class MaterialModule { }

@@ -28,3 +28,36 @@
   background-color: #4caf50;
   color: white;
 }
+
+@media (max-width: 768px) {
+
+  .mat-mdc-header-row,
+  .mat-mdc-header-cell,
+  .mat-cell {
+    font-size: 0.75rem;
+    padding: 2px;
+    margin: 2px;
+  }
+
+  .mat-tooltip {
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .mdc-data-table__cell,
+  .mdc-data-table__header-cell {
+    padding: 0 4px;
+  }
+
+  .mat-table {
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+  }
+
+  .add_user {
+    bottom: 10%;
+    right: 5%;
+    transform: scale(0.8);
+  }
+}

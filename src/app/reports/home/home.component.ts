@@ -1,7 +1,7 @@
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 import { EditUserDialogComponent } from '../../components/edit-user-dialog/edit-user-dialog.component';
 import { AddUserDialogComponent } from '../../components/add-user-dialog/add-user-dialog.component';
@@ -18,6 +18,7 @@ import { User } from '../../models/user.model';
 export class HomeComponent {
 
   private FILE_NAME: string = 'home.ts';
+  isMobileView: boolean = window.innerWidth <= 768;
   dataSource: MatTableDataSource<User> = new MatTableDataSource();
   displayedColumns: string[] = [
     'firstName',
@@ -37,6 +38,13 @@ export class HomeComponent {
 
   ngOnInit() {
     this.loadUsersFromCookies();
+    this.isMobileView = window.innerWidth <= 768;
+    
+    if (window.innerWidth <= 768) {
+      this.displayedColumns = ['firstName', 'lastName', 'gender', 'age', 'countryIcon', 'cityIcon', 'edit', 'remove'];
+    } else {
+      this.displayedColumns = ['firstName', 'lastName', 'gender', 'age', 'country', 'city', 'edit', 'remove'];
+    }
   }
 
   loadUsersFromCookies(): void {
@@ -112,5 +120,10 @@ export class HomeComponent {
     catch (err) {
       console.log(err, ' in removeUser ' + this.FILE_NAME);
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.isMobileView = (event.target as Window).innerWidth <= 768;
   }
 }
