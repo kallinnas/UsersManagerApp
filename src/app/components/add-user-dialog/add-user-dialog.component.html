@@ -23,10 +23,10 @@
             <mat-form-field dir="ltr">
                 <mat-label>Gender</mat-label>
                 <mat-select formControlName="gender">
-                    <mat-option value="Male">Male</mat-option>
-                    <mat-option value="Female">Female</mat-option>
-                    <mat-option value="Other">Other</mat-option>
-                </mat-select>
+                    <mat-option *ngFor="let gender of genderOptions" [value]="gender">
+                      {{ gender }}
+                    </mat-option>
+                  </mat-select>
             </mat-form-field>
         </div>
 

@@ -1,53 +1,57 @@
-<h2 mat-dialog-title>{{ data?.user ? 'Edit User' : 'Add User' }}</h2>
+<div fxFlex fxLayout="column" style="padding: 20px;">
+  <div>{{ 'Edit User' }}</div>
 
-<form [formGroup]="userForm" class="user-form">
-  <div fxLayout="row" fxLayoutGap="16px">
-    <mat-form-field appearance="fill" fxFlex="50%">
-      <mat-label>First Name</mat-label>
-      <input matInput formControlName="firstName">
-    </mat-form-field>
+  <form fxFlex fxLayout="column" [formGroup]="userForm">
+    <div fxLayout="row" fxLayoutGap="16px">
+      <mat-form-field>
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName">
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" fxFlex="50%">
-      <mat-label>Last Name</mat-label>
-      <input matInput formControlName="lastName">
-    </mat-form-field>
-  </div>
+      <mat-form-field>
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName">
+      </mat-form-field>
+    </div>
 
-  <div fxLayout="row" fxLayoutGap="16px">
-    <mat-form-field appearance="fill" fxFlex="50%">
-      <mat-label>Age</mat-label>
-      <input matInput formControlName="age" type="number">
-    </mat-form-field>
+    <div fxLayout="row" fxLayoutGap="16px">
+      <mat-form-field>
+        <mat-label>Age</mat-label>
+        <input matInput formControlName="age" type="number">
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" fxFlex="50%">
-      <mat-label>Gender</mat-label>
-      <mat-select formControlName="gender">
-        <mat-option *ngFor="let gender of genderOptions" [value]="gender">
-          {{ gender }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+      <mat-form-field dir="ltr">
+        <mat-label>Gender</mat-label>
+        <mat-select formControlName="gender">
+          <mat-option *ngFor="let gender of genderOptions" [value]="gender">
+            {{ gender }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <div fxLayout="row" fxLayoutGap="16px">
-    <mat-form-field appearance="fill" fxFlex="50%">
-      <mat-label>Country</mat-label>
-      <input type="text" matInput formControlName="country" [matAutocomplete]="autoCountry">
-      <mat-autocomplete #autoCountry="matAutocomplete">
-        <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
-          {{ country }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+    <div fxLayout="row" fxLayoutGap="16px">
+      <mat-form-field>
+        <mat-label>Country</mat-label>
+        <input type="text" matInput formControlName="country" [matAutocomplete]="autoCountry">
+        <mat-autocomplete #autoCountry="matAutocomplete">
+          <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+            {{ country }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" fxFlex="50%">
-      <mat-label>City</mat-label>
-      <input matInput formControlName="city">
-    </mat-form-field>
-  </div>
+      <mat-form-field>
+        <mat-label>City</mat-label>
+        <input matInput formControlName="city">
+      </mat-form-field>
+    </div>
 
-  <div mat-dialog-actions align="end">
-    <button mat-button (click)="close()">Close</button>
-    <button mat-raised-button color="primary" (click)="save()" [disabled]="userForm.invalid">Save</button>
-  </div>
-</form>
+    <div class="dialog_actions" fxFlex fxLayoutAlign="start center" fxLayoutGap="8px" fxFlexOffset="30px">
+      <button mat-button (click)="close()">Close</button>
+      <button mat-raised-button (click)="save()" [disabled]="userForm.invalid">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

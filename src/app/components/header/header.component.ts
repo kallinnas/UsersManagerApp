@@ -12,8 +12,7 @@ export class HeaderComponent {
 
   @Output() sidenavToggle = new EventEmitter<void>();
 
-  constructor(
-  ) { }
+  constructor() { }
 
   onToggleSidenav() { this.sidenavToggle.emit(); }
 

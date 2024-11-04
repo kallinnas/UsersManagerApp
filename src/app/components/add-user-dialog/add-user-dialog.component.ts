@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, startWith, map } from 'rxjs';
 import { User } from '../../models/user.model';
 import { GeneralModule } from '../../modules/general.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-add-user-dialog',
@@ -14,7 +15,11 @@ import { GeneralModule } from '../../modules/general.model';
   styleUrl: './add-user-dialog.component.scss'
 })
 export class AddUserDialogComponent {
-  userForm: FormGroup;
+
+  private FILE_NAME: string = 'add-user-dialog.ts';
+  countryUrl: string = environment.countryUrl;
+  userForm!: FormGroup;
+  genderOptions = ['Female', 'Male', 'Other'];
   countries: string[] = [];
   filteredCountries$!: Observable<string[]>;
 
@@ -23,45 +28,70 @@ export class AddUserDialogComponent {
     private dialogRef: MatDialogRef<AddUserDialogComponent>,
     private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: { user: User | null }
-  ) {
-    this.userForm = this.fb.group({
-      firstName: [data.user?.firstName || '', Validators.required],
-      lastName: [data.user?.lastName || '', Validators.required],
-      age: [data.user?.age || '', [Validators.required, Validators.min(1)]],
-      gender: [data.user?.gender || '', Validators.required],
-      country: [data.user?.country || '', Validators.required],
-      city: [data.user?.city || '', Validators.required],
-    });
-  }
+  ) { }
 
   ngOnInit(): void {
+    this.initForm();
     this.loadCountries();
 
-    // Set up autocomplete filtering for the country field
     this.filteredCountries$ = this.userForm.get('country')!.valueChanges.pipe(
       startWith(''),
       map(value => this._filterCountries(value || ''))
     );
   }
 
-  private loadCountries(): void {
-    this.http.get<any[]>('https://restcountries.com/v3.1/all').subscribe(countries => {
-      this.countries = countries.map(country => country.name.common);
-    });
-  }
+  initForm() {
+    try {
+      this.userForm = this.fb.group({
+        firstName: [this.data.user?.firstName || '', Validators.required],
+        lastName: [this.data.user?.lastName || '', Validators.required],
+        age: [this.data.user?.age || '', [Validators.required, Validators.min(1)]],
+        gender: [this.data.user?.gender || '', Validators.required],
+        country: [this.data.user?.country || '', Validators.required],
+        city: [this.data.user?.city || '', Validators.required],
+      });
+    }
 
-  private _filterCountries(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.countries.filter(country => country.toLowerCase().includes(filterValue));
-  }
-
-  save(): void {
-    if (this.userForm.valid) {
-      this.dialogRef.close(this.userForm.value); // Pass form data to parent component
+    catch (err) {
+      console.log(err, ' in initForm ' + this.FILE_NAME);
     }
   }
 
-  close(): void {
-    this.dialogRef.close();
+  private loadCountries(): void {
+    try {
+      this.http.get<any[]>(this.countryUrl).subscribe(countries => {
+        this.countries = countries.map(country => country.name.common);
+      });
+    }
+
+    catch (err) {
+      console.log(err, ' in loadCountries ' + this.FILE_NAME);
+    }
   }
+
+  private _filterCountries(value: string): string[] {
+    try {
+      const filterValue = value.toLowerCase();
+      return this.countries.filter(country => country.toLowerCase().includes(filterValue));
+    }
+
+    catch (err) {
+      console.log(err, ' in _filterCountries ' + this.FILE_NAME);
+      return [];
+    }
+  }
+
+  save(): void {
+    try {
+      if (this.userForm.valid) {
+        this.dialogRef.close(this.userForm.value);
+      }
+    }
+
+    catch (err) {
+      console.log(err, ' in save ' + this.FILE_NAME);
+    }
+  }
+
+  close(): void { this.dialogRef.close(); }
 }

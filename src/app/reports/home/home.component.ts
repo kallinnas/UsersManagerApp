@@ -17,8 +17,8 @@ import { User } from '../../models/user.model';
 })
 export class HomeComponent {
 
+  private FILE_NAME: string = 'home.ts';
   dataSource: MatTableDataSource<User> = new MatTableDataSource();
-
   displayedColumns: string[] = [
     'firstName',
     'lastName',
@@ -40,47 +40,77 @@ export class HomeComponent {
   }
 
   loadUsersFromCookies(): void {
-    const usersCookie = this.cookieService.get('users');
-    this.dataSource.data = usersCookie ? JSON.parse(usersCookie) : [];
+    try {
+      const usersCookie = this.cookieService.get('users');
+      this.dataSource.data = usersCookie ? JSON.parse(usersCookie) : [];
+    }
+
+    catch (err) {
+      console.log(err, ' in loadUsersFromCookies ' + this.FILE_NAME);
+    }
   }
 
   saveUsersToCookies(): void {
-    this.cookieService.set('users', JSON.stringify(this.dataSource.data));
-  }
-  
-  openAddUserDialog(): void {
-    const dialogRef = this.dialog.open(AddUserDialogComponent, {
-      width: '420px',
-      data: { user: null }
-    });
+    try {
+      this.cookieService.set('users', JSON.stringify(this.dataSource.data));
+    }
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.dataSource.data = [...this.dataSource.data, result];
-        this.saveUsersToCookies();
-      }
-    });
+    catch (err) {
+      console.log(err, ' in saveUsersToCookies ' + this.FILE_NAME);
+    }
+  }
+
+  openAddUserDialog(): void {
+    try {
+      const dialogRef = this.dialog.open(AddUserDialogComponent, {
+        width: '420px',
+        data: { user: null }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.dataSource.data = [...this.dataSource.data, result];
+          this.saveUsersToCookies();
+        }
+      });
+    }
+
+    catch (err) {
+      console.log(err, ' in openAddUserDialog ' + this.FILE_NAME);
+    }
   }
 
   openEditDialog(userID: number): void {
-    const user = this.dataSource.data.find(u => u.id === userID);
-    const dialogRef = this.dialog.open(EditUserDialogComponent, {
-      width: '400px',
-      data: { user }
-    });
+    try {
+      const user = this.dataSource.data.find(u => u.id === userID);
+      const dialogRef = this.dialog.open(EditUserDialogComponent, {
+        width: '420px',
+        data: { user }
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        const index = this.dataSource.data.findIndex((u: User) => u.id === userID);
-        this.dataSource.data[index] = result;
-        this.dataSource.data = [...this.dataSource.data];
-        this.saveUsersToCookies();
-      }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          const index = this.dataSource.data.findIndex((u: User) => u.id === userID);
+          this.dataSource.data[index] = result;
+          this.dataSource.data = [...this.dataSource.data];
+          this.saveUsersToCookies();
+        }
+      });
+    }
+
+    catch (err) {
+      console.log(err, ' in openEditDialog ' + this.FILE_NAME);
+    }
   }
 
   removeUser(userID: number): void {
-    this.dataSource.data = this.dataSource.data.filter(user => user.id !== userID);
-    this.saveUsersToCookies();
+    try {
+      this.dataSource.data = this.dataSource.data.filter(user => user.id !== userID);
+      this.saveUsersToCookies();
+    }
+
+    catch (err) {
+      console.log(err, ' in removeUser ' + this.FILE_NAME);
+    }
   }
 }
