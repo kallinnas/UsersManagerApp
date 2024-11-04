@@ -1,3 +1,18 @@
+.filter_container {
+  position: relative;
+  height: 10px;
+}
+
+.filter_field {
+  width: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.table_container {
+  margin-top: 60px;
+}
+
 .no_data {
   position: absolute;
   top: 50%;
@@ -23,17 +38,20 @@
 }
 
 .add_user_btn {
-  position: absolute;
+  position: fixed;
   bottom: 15%;
   right: 3%;
   background-color: #4caf50;
   color: white;
+  z-index: 200;
 }
 
 .paginator {
-  position: fixed;
-  right: 70px;
-  bottom: 50px;
+  position: sticky;
+  bottom: 0;
+  background-color: white;
+  z-index: 10;
+  padding: 8px 0;
 }
 
 @media (max-width: 768px) {
@@ -42,8 +60,6 @@
   .mat-mdc-header-cell,
   .mat-cell {
     font-size: 0.75rem;
-    // padding: 2px;
-    // margin: 2px;
   }
 
   .mat-tooltip {
@@ -67,10 +83,38 @@
     right: 5%;
     transform: scale(0.8);
   }
-  
 }
 
 ::ng-deep .mat-sort-header-container {
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
+}
+
+/* Targeting the paginator to stay in one line */
+::ng-deep .mat-paginator {
+  display: flex;
+  flex-wrap: nowrap; /* Prevents items from wrapping onto a new line */
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Adjust styles for mobile view */
+@media (max-width: 768px) {
+  ::ng-deep .mat-paginator {
+    font-size: 0.875rem; /* Smaller font size for mobile */
+    padding: 0 8px;
+  }
+
+  /* Narrow down the spacing for items */
+  ::ng-deep .mat-paginator .mat-paginator-range-label,
+  ::ng-deep .mat-paginator .mat-select-trigger,
+  ::ng-deep .mat-paginator .mat-icon-button {
+    margin: 0 4px; /* Adjust margins to fit more comfortably */
+  }
+
+  /* Adjust the select box width */
+  ::ng-deep .mat-paginator .mat-select {
+    min-width: auto; /* Removes fixed minimum width */
+    width: 70px; /* Custom width to fit on mobile */
+  }
 }

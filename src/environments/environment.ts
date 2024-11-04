@@ -2,11 +2,11 @@ export const environment = {
   production: false,
   countryUrl: 'https://restcountries.com/v3.1/all',
   firebase: {
-    apiKey: "AIzaSyDBmg4ghv_n0VM4x0zFcbZao55ByvrQRuA",
-    authDomain: "fitness-tracker-exercise.firebaseapp.com",
-    projectId: "fitness-tracker-exercise",
-    storageBucket: "fitness-tracker-exercise.appspot.com",
-    messagingSenderId: "719660455903",
-    appId: "1:719660455903:web:e4ffb6212f832f0635566a"
+    apiKey: "AIzaSyCfMSqiE_dKgHQ4FVCXuZGdR0Znh28X_Mo",
+    authDomain: "users-manager-app-e6eb9.firebaseapp.com",
+    projectId: "users-manager-app-e6eb9",
+    storageBucket: "users-manager-app-e6eb9.firebasestorage.app",
+    messagingSenderId: "599487984447",
+    appId: "1:599487984447:web:b2298d85e64c22dd74598a"
   }
 };

@@ -1,12 +1,12 @@
 <h2>My Users</h2>
 
-<div *ngIf="dataSource.data.length > 0">
-    <mat-form-field style="width: 100%;">
+<div class="filter_container">
+    <mat-form-field *ngIf="dataSource.data.length > 0" class="filter_field">
         <input matInput (keyup)="applyFilter($event)" placeholder="Filter Users" />
     </mat-form-field>
 </div>
 
-<div class="table-container">
+<div class="table_container">
     <table mat-table [dataSource]="dataSource" matSort>
 
         <ng-container matColumnDef="firstName">
@@ -103,7 +103,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
-    <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+    <mat-paginator class="paginator" [pageSizeOptions]="[10, 20, 50]"></mat-paginator>
 </div>
 
 <div *ngIf="dataSource.data.length == 0" class="no_data">

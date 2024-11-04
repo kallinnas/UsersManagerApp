@@ -1,8 +1,7 @@
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { Component, HostListener, ViewChild } from '@angular/core';
-import { MatSortModule } from '@angular/material/sort';
+import { Firestore, collection, addDoc, deleteDoc, doc, updateDoc, collectionData } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { MatSort } from '@angular/material/sort';
@@ -31,12 +30,14 @@ export class HomeComponent {
 
   constructor(
     private cookieService: CookieService,
+    private firestore: Firestore,
     private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
     this.setDisplayColumns();
-    this.loadUsersFromCookies();
+    // this.loadUsersFromCookies();
+    this.loadUsersFromFirestore();
     this.isMobileView = window.innerWidth <= 768;
   }
 
@@ -62,6 +63,13 @@ export class HomeComponent {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  loadUsersFromFirestore(): void {
+    const usersCollection = collection(this.firestore, 'users');
+    collectionData(usersCollection, { idField: 'id' }).subscribe((users: User[]) => {
+      this.dataSource.data = users as User[];
+    });
   }
 
   loadUsersFromCookies(): void {
@@ -93,13 +101,15 @@ export class HomeComponent {
         data: { user: null }
       });
 
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe(async result => {
         if (result) {
-          const data = this.dataSource.data;
-          const newUserId = data.length > 0 ? data[data.length - 1].id + 1 : 1;
-          const newUser: User = { ...result, id: newUserId };
-          this.dataSource.data = [...this.dataSource.data, newUser];
-          this.saveUsersToCookies();
+          // const data = this.dataSource.data;
+          // const newUserId = data.length > 0 ? data[data.length - 1].id + 1 : 1;
+          // const newUser: User = { ...result, id: newUserId };
+          // this.dataSource.data = [...this.dataSource.data, newUser];
+          // this.saveUsersToCookies();
+          const usersCollection = collection(this.firestore, 'users');
+          await addDoc(usersCollection, result);
         }
       });
     }
@@ -118,12 +128,14 @@ export class HomeComponent {
         data: { user }
       });
 
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe(async result => {
         if (result) {
-          const index = this.dataSource.data.findIndex((u: User) => u.id === userID);
-          this.dataSource.data[index] = result;
-          this.dataSource.data = [...this.dataSource.data];
-          this.saveUsersToCookies();
+          // const index = this.dataSource.data.findIndex((u: User) => u.id === userID);
+          // this.dataSource.data[index] = result;
+          // this.dataSource.data = [...this.dataSource.data];
+          // this.saveUsersToCookies();
+          const userDoc = doc(this.firestore, `users/${userID}`);
+          await updateDoc(userDoc, result);
         }
       });
     }
@@ -135,8 +147,12 @@ export class HomeComponent {
 
   removeUser(userID: number): void {
     try {
-      this.dataSource.data = this.dataSource.data.filter(user => user.id !== userID);
-      this.saveUsersToCookies();
+      // this.dataSource.data = this.dataSource.data.filter(user => user.id !== userID);
+      // this.saveUsersToCookies();
+      const userDoc = doc(this.firestore, `users/${userID}`);
+      deleteDoc(userDoc).then(() => {
+        console.log(`User with ID ${userID} deleted from Firestore`);
+      });
     }
 
     catch (err) {
