@@ -30,7 +30,7 @@
   color: white;
 }
 
-.footer {
+.paginator {
   position: fixed;
   right: 70px;
   bottom: 50px;
@@ -42,8 +42,8 @@
   .mat-mdc-header-cell,
   .mat-cell {
     font-size: 0.75rem;
-    padding: 2px;
-    margin: 2px;
+    // padding: 2px;
+    // margin: 2px;
   }
 
   .mat-tooltip {
