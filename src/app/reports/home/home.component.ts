@@ -39,7 +39,7 @@ export class HomeComponent {
   ngOnInit() {
     this.loadUsersFromCookies();
     this.isMobileView = window.innerWidth <= 768;
-    
+
     if (window.innerWidth <= 768) {
       this.displayedColumns = ['firstName', 'lastName', 'gender', 'age', 'countryIcon', 'cityIcon', 'edit', 'remove'];
     } else {
@@ -71,6 +71,7 @@ export class HomeComponent {
   openAddUserDialog(): void {
     try {
       const dialogRef = this.dialog.open(AddUserDialogComponent, {
+        autoFocus: false,
         width: '420px',
         data: { user: null }
       });
@@ -92,6 +93,7 @@ export class HomeComponent {
     try {
       const user = this.dataSource.data.find(u => u.id === userID);
       const dialogRef = this.dialog.open(EditUserDialogComponent, {
+        autoFocus: false,
         width: '420px',
         data: { user }
       });
