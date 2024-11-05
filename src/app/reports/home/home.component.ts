@@ -10,6 +10,7 @@ import { EditUserDialogComponent } from '../../components/edit-user-dialog/edit-
 import { AddUserDialogComponent } from '../../components/add-user-dialog/add-user-dialog.component';
 import { GeneralModule } from '../../modules/general.model';
 import { User } from '../../models/user.model';
+import { UiService } from '../../services/ui.service';
 
 @Component({
   selector: 'app-home',
@@ -32,6 +33,7 @@ export class HomeComponent {
     private cookieService: CookieService,
     private firestore: Firestore,
     private dialog: MatDialog,
+    public uiService: UiService,
   ) { }
 
   ngOnInit() {
@@ -66,9 +68,11 @@ export class HomeComponent {
   }
 
   loadUsersFromFirestore(): void {
+    this.uiService.spinnerOn();
     const usersCollection = collection(this.firestore, 'users');
     collectionData(usersCollection, { idField: 'id' }).subscribe((users: User[]) => {
       this.dataSource.data = users as User[];
+      this.uiService.spinnerOff();
     });
   }
 
@@ -110,12 +114,14 @@ export class HomeComponent {
           // this.saveUsersToCookies();
           const usersCollection = collection(this.firestore, 'users');
           await addDoc(usersCollection, result);
+          this.uiService.showSnackbar('User added successfully', 'Close', 3000);
         }
       });
     }
-
+    
     catch (err) {
       console.log(err, ' in openAddUserDialog ' + this.FILE_NAME);
+      this.uiService.showSnackbar('Error adding user', 'Close', 3000);
     }
   }
 
@@ -136,12 +142,14 @@ export class HomeComponent {
           // this.saveUsersToCookies();
           const userDoc = doc(this.firestore, `users/${userID}`);
           await updateDoc(userDoc, result);
+          this.uiService.showSnackbar('User updated successfully', 'Close', 3000);
         }
       });
     }
 
     catch (err) {
       console.log(err, ' in openEditDialog ' + this.FILE_NAME);
+      this.uiService.showSnackbar('Error updating user', 'Close', 3000);
     }
   }
 
@@ -152,11 +160,13 @@ export class HomeComponent {
       const userDoc = doc(this.firestore, `users/${userID}`);
       deleteDoc(userDoc).then(() => {
         console.log(`User with ID ${userID} deleted from Firestore`);
+        this.uiService.showSnackbar('User deleted successfully', 'Close', 3000);
       });
     }
-
+    
     catch (err) {
       console.log(err, ' in removeUser ' + this.FILE_NAME);
+      this.uiService.showSnackbar('Error deleting user', 'Close', 3000);
     }
   }
 
