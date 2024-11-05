@@ -6,7 +6,7 @@
     </mat-form-field>
 </div>
 
-<ng-template class="table_container" #userTable>
+<div class="table_container" #userTable>
     <table mat-table [dataSource]="dataSource" matSort>
 
         <ng-container matColumnDef="firstName">
@@ -103,14 +103,17 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
-    <mat-paginator class="paginator" [pageSizeOptions]="[10, 20, 50]"></mat-paginator>
-</ng-template>
+</div>
+
+<div class="paginator">
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]"></mat-paginator>
+</div>
 
 <div *ngIf="dataSource.data.length == 0 && !uiService.isSpinning" class="no_data">
     No Users
 </div>
 
-<div *ngIf="uiService.isSpinning; else userTable" class="no_data">
+<div *ngIf="uiService.isSpinning" class="no_data">
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 </div>
 

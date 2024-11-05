@@ -1,6 +1,6 @@
 .filter_container {
   position: relative;
-  height: 60px;
+  height: 10px;
 }
 
 .filter_field {
@@ -23,20 +23,6 @@
   color: #ada7a7;
 }
 
-.mat-mdc-header-row {
-  background-color: #d7cece;
-  height: 40px;
-}
-
-.mat-mdc-header-cell:first-child {
-  border-top-left-radius: 25px;
-  padding: 10px;
-}
-
-.mat-mdc-header-cell:last-child {
-  border-top-right-radius: 25px;
-}
-
 .add_user_btn {
   position: fixed;
   bottom: 15%;
@@ -52,11 +38,24 @@
   background-color: white;
   z-index: 10;
   padding: 10px 0;
-  max-height: 48px;
+  max-height: 50px;
+}
+
+.mat-mdc-header-row {
+  background-color: #d7cece;
+  height: 40px;
+}
+
+.mat-mdc-header-cell:first-child {
+  border-top-left-radius: 25px;
+  padding: 10px;
+}
+
+.mat-mdc-header-cell:last-child {
+  border-top-right-radius: 25px;
 }
 
 @media (max-width: 768px) {
-
   .mat-mdc-header-row,
   .mat-mdc-header-cell,
   .mat-cell {
