@@ -37,6 +37,7 @@ export class HomeComponent {
   ) { }
 
   ngOnInit() {
+    // this.generateAndAddUsers();
     this.setDisplayColumns();
     // this.loadUsersFromCookies();
     this.loadUsersFromFirestore();
@@ -72,6 +73,8 @@ export class HomeComponent {
     const usersCollection = collection(this.firestore, 'users');
     collectionData(usersCollection, { idField: 'id' }).subscribe((users: User[]) => {
       this.dataSource.data = users as User[];
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
       this.uiService.spinnerOff();
     });
   }
@@ -118,7 +121,7 @@ export class HomeComponent {
         }
       });
     }
-    
+
     catch (err) {
       console.log(err, ' in openAddUserDialog ' + this.FILE_NAME);
       this.uiService.showSnackbar('Error adding user', 'Close', 3000);
@@ -163,7 +166,7 @@ export class HomeComponent {
         this.uiService.showSnackbar('User deleted successfully', 'Close', 3000);
       });
     }
-    
+
     catch (err) {
       console.log(err, ' in removeUser ' + this.FILE_NAME);
       this.uiService.showSnackbar('Error deleting user', 'Close', 3000);
@@ -174,4 +177,29 @@ export class HomeComponent {
   onResize(event: Event) {
     this.isMobileView = (event.target as Window).innerWidth <= 768;
   }
+
+
+  async generateAndAddUsers(): Promise<void> {
+    const usersCollection = collection(this.firestore, 'users');
+    const countries = ['USA', 'Canada', 'Germany', 'France', 'Japan'];
+    const cities = ['New York', 'Toronto', 'Berlin', 'Paris', 'Tokyo'];
+    const firstNames = ['John', 'Alice', 'Bob', 'Maria', 'David'];
+    const lastNames = ['Smith', 'Johnson', 'Brown', 'Williams', 'Jones'];
+
+    for (let i = 0; i < 20; i++) {
+      const newUser: User = {
+        id: i + 1,
+        firstName: firstNames[Math.floor(Math.random() * firstNames.length)],
+        lastName: lastNames[Math.floor(Math.random() * lastNames.length)],
+        gender: Math.random() > 0.5 ? 1 : 0,
+        age: Math.floor(Math.random() * 40) + 20,
+        country: countries[Math.floor(Math.random() * countries.length)],
+        city: cities[Math.floor(Math.random() * cities.length)],
+      };
+      await addDoc(usersCollection, newUser);
+    }
+
+    this.uiService.showSnackbar('20 users added successfully', 'Close', 3000);
+  }
+
 }

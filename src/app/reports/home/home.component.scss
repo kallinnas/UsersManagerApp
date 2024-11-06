@@ -1,3 +1,8 @@
+:host {
+  display: block;
+  background-color: whitesmoke;
+}
+
 .filter_container {
   position: relative;
   height: 10px;
@@ -11,6 +16,7 @@
 
 .table_container {
   margin-top: 60px;
+  margin-bottom: 60px;
 }
 
 .no_data {
@@ -25,7 +31,7 @@
 
 .add_user_btn {
   position: fixed;
-  bottom: 15%;
+  bottom: 12%;
   right: 3%;
   background-color: #4caf50;
   color: white;
@@ -33,16 +39,16 @@
 }
 
 .paginator {
-  position: sticky;
-  bottom: 0;
-  background-color: white;
+  position: fixed;
+  bottom: 60px; 
+  width: 100%;
+  background-color: whitesmoke;
   z-index: 10;
   padding: 10px 0;
-  max-height: 50px;
 }
 
 .mat-mdc-header-row {
-  background-color: #d7cece;
+  background-color: rgb(229, 229, 229);
   height: 40px;
 }
 
@@ -122,4 +128,5 @@
 ::ng-deep .mat-mdc-paginator-container {
   flex-wrap: nowrap !important;
   justify-content: start !important;
+  background-color: whitesmoke;
 }
