@@ -7,7 +7,7 @@ app.use(express.static(path.join(__dirname, 'dist/users-manager-app')));
 
 // Redirect all requests to the Angular app
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/users-manager-app/index.html'));
+  res.sendFile(path.join(__dirname, 'dist/users-manager-app/browser/index.html'));
 });
 
 // Start the app by listening on the default Railway port
