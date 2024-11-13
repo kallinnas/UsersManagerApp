@@ -3,7 +3,7 @@ const path = require('path');
 const app = express();
 
 // Serve the static files from the Angular dist directory
-app.use(express.static(path.join(__dirname, 'dist/users-manager-app')));
+app.use(express.static(path.join(__dirname, 'dist/users-manager-app/browser')));
 
 // Redirect all requests to the Angular app
 app.get('/*', (req, res) => {
