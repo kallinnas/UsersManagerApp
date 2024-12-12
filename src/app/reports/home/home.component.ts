@@ -71,13 +71,23 @@ export class HomeComponent {
   loadUsersFromFirestore(): void {
     this.uiService.spinnerOn();
     const usersCollection = collection(this.firestore, 'users');
-    collectionData(usersCollection, { idField: 'id' }).subscribe((users: User[]) => {
-      this.dataSource.data = users as User[];
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.uiService.spinnerOff();
-    });
+
+    collectionData(usersCollection, { idField: 'id' })
+      .subscribe({
+        next: (users: User[]) => {
+          this.dataSource.data = users as User[];
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          this.uiService.spinnerOff();
+        },
+        error: (err: any) => {
+          this.uiService.spinnerOff();
+          console.error(err);
+        }
+      });
   }
+
+
 
   loadUsersFromCookies(): void {
     try {

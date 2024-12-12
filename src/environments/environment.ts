@@ -7,6 +7,7 @@ export const environment = {
     projectId: "users-manager-app-e6eb9",
     storageBucket: "users-manager-app-e6eb9.firebasestorage.app",
     messagingSenderId: "599487984447",
-    appId: "1:599487984447:web:b2298d85e64c22dd74598a"
+    appId: "1:599487984447:web:b2298d85e64c22dd74598a",
+    measurementId: "G-0WQK8JEVEB"
   }
 };
